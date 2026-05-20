@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MatConnect Admin Dashboard</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;}
+    nav{background:#0a193c;padding:16px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1e3a6e;}
+    .logo{font-size:20px;font-weight:800;color:#fff;}.logo span{color:#f0b429;}
+    .nav-right{font-size:13px;color:#64748b;}
+    .container{max-width:1300px;margin:0 auto;padding:32px 24px;}
+    .page-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:6px;}
+    .page-sub{font-size:14px;color:#64748b;margin-bottom:32px;}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:36px;}
+    .stat-card{background:#1e293b;border-radius:14px;padding:24px;border:1px solid #2d3f5e;}
+    .stat-label{font-size:12px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .stat-value{font-size:36px;font-weight:900;color:#f0b429;}
+    .stat-sub{font-size:12px;color:#475569;margin-top:4px;}
+    .section{background:#1e293b;border-radius:14px;border:1px solid #2d3f5e;margin-bottom:24px;overflow:hidden;}
+    .section-header{padding:20px 24px;border-bottom:1px solid #2d3f5e;display:flex;justify-content:space-between;align-items:center;}
+    .section-title{font-size:16px;font-weight:700;color:#fff;}
+    .badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+    .badge-blue{background:rgba(59,130,246,0.15);color:#60a5fa;}
+    .badge-green{background:rgba(34,197,94,0.15);color:#4ade80;}
+    .badge-yellow{background:rgba(240,180,41,0.15);color:#f0b429;}
+    .badge-red{background:rgba(239,68,68,0.15);color:#f87171;}
+    .badge-gray{background:rgba(100,116,139,0.15);color:#94a3b8;}
+    table{width:100%;border-collapse:collapse;}
+    th{padding:12px 20px;text-align:left;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid #2d3f5e;}
+    td{padding:14px 20px;font-size:14px;border-bottom:1px solid #1a2540;vertical-align:middle;}
+    tr:last-child td{border-bottom:none;}
+    tr:hover td{background:rgba(255,255,255,0.02);}
+    .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#0a193c,#1e3a70);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#f0b429;flex-shrink:0;}
+    .user-cell{display:flex;align-items:center;gap:12px;}
+    .user-name{font-weight:600;color:#e2e8f0;}
+    .user-email{font-size:12px;color:#64748b;}
+    .rate{font-weight:700;color:#4ade80;}
+    .stars{color:#f0b429;font-size:13px;}
+    .tab-bar{display:flex;gap:4px;padding:4px;background:#0f172a;border-radius:10px;margin-bottom:28px;width:fit-content;}
+    .tab{padding:8px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;color:#64748b;transition:all 0.2s;border:none;background:transparent;}
+    .tab.active{background:#1e293b;color:#f0b429;border:1px solid #2d3f5e;}
+    .tab:hover:not(.active){color:#94a3b8;}
+    .view{display:none;}
+    .view.active{display:block;}
+    .specialty-tag{display:inline-block;background:rgba(59,130,246,0.1);color:#60a5fa;border:1px solid rgba(59,130,246,0.2);padding:2px 8px;border-radius:4px;font-size:11px;margin:2px;}
+    .booking-status{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;}
+    .status-confirmed{background:rgba(34,197,94,0.15);color:#4ade80;}
+    .status-cancelled{background:rgba(239,68,68,0.15);color:#f87171;}
+    .status-completed{background:rgba(240,180,41,0.15);color:#f0b429;}
+    .status-pending{background:rgba(100,116,139,0.15);color:#94a3b8;}
+    .empty{text-align:center;padding:48px;color:#475569;font-size:15px;}
+    .revenue-highlight{font-weight:700;color:#4ade80;}
+    @media(max-width:768px){
+      .stats-grid{grid-template-columns:repeat(2,1fr);}
+      .container{padding:16px;}
+      th,td{padding:10px 12px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Mat<span>Connect</span> <span style="color:#64748b;font-size:13px;font-weight:400;margin-left:8px;">Admin</span></div>
+  <div class="nav-right">Princeton, MN &nbsp;·&nbsp; Beta Phase</div>
+</nav>
+
+<div class="container">
+  <div class="page-title">Dashboard</div>
+  <div class="page-sub">Live snapshot of your MatConnect platform</div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Coaches</div>
+      <div class="stat-value">3</div>
+      <div class="stat-sub">2 active profiles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Parents</div>
+      <div class="stat-value">4</div>
+      <div class="stat-sub">All active</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Bookings</div>
+      <div class="stat-value">21</div>
+      <div class="stat-sub">3 confirmed · 1 completed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Reviews</div>
+      <div class="stat-value">2</div>
+      <div class="stat-sub">⭐ 5.0 avg rating</div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('coaches')">🏅 Coaches</button>
+    <button class="tab" onclick="showTab('parents')">👨‍👩‍👦 Parents</button>
+    <button class="tab" onclick="showTab('bookings')">📅 Bookings</button>
+    <button class="tab" onclick="showTab('reviews')">⭐ Reviews</button>
+  </div>
+
+  <!-- COACHES -->
+  <div id="coaches" class="view active">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Coaches <span style="color:#64748b;font-weight:400;font-size:14px;">(3)</span></div>
+        <span class="badge badge-green">Beta Active</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Coach</th><th>Location</th><th>Level</th><th>Rate</th><th>Specialties</th><th>Rating</th><th>Status</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">M</div><div><div class="user-name">macrkukowski</div><div class="user-email">macrkukowski@gmail.com</div></div></div></td>
+            <td>Wayzata, MN</td>
+            <td><span class="badge badge-blue">Professional</span></td>
+            <td><span class="rate">$100/hr</span></td>
+            <td><span class="specialty-tag">Takedowns</span><span class="specialty-tag">Freestyle</span><span class="specialty-tag">Greco-Roman</span><span class="specialty-tag">Pins</span></td>
+            <td><span class="stars">★★★★★</span> <span style="color:#64748b;font-size:12px;">New</span></td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">J</div><div><div class="user-name">Joel Jesuroga</div><div class="user-email">jesurogajoel12@gmail.com</div></div></div></td>
+            <td>St. Cloud, MN</td>
+            <td><span class="badge badge-yellow">College</span></td>
+            <td><span class="rate">$80/hr</span></td>
+            <td><span style="color:#475569;font-size:12px;">Not set</span></td>
+            <td><span class="stars">★★★★★</span> <span style="color:#64748b;font-size:12px;">New</span></td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">R</div><div><div class="user-name">Robert Olson</div><div class="user-email">justdipithydro777@gmail.com</div></div></div></td>
+            <td>Princeton, MN</td>
+            <td><span class="badge badge-gray">High School</span></td>
+            <td><span class="rate">$0/hr</span></td>
+            <td><span style="color:#475569;font-size:12px;">Not set</span></td>
+            <td><span class="stars">★★★★★</span> <span style="color:#64748b;font-size:12px;">5.0</span></td>
+            <td><span class="badge badge-yellow">Premium</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PARENTS -->
+  <div id="parents" class="view">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Parents / Families <span style="color:#64748b;font-weight:400;font-size:14px;">(4)</span></div>
+        <span class="badge badge-green">All Active</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Parent</th><th>Location</th><th>Wrestler(s)</th><th>Weight Class</th><th>Phone</th><th>Subscription</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">R</div><div><div class="user-name">Rob Olson</div><div class="user-email">rolson_2007@yahoo.com</div></div></div></td>
+            <td>Foley, MN</td>
+            <td>Blaine Olson (13)</td>
+            <td>70 lbs · Competitive</td>
+            <td>320-247-0838</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">D</div><div><div class="user-name">danomalum</div><div class="user-email">danomalum@yahoo.com</div></div></div></td>
+            <td>Foley, MN</td>
+            <td>Eli (13)</td>
+            <td>80 lbs · Advanced</td>
+            <td>320-493-1823</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">R</div><div><div class="user-name">Robert Olson</div><div class="user-email">3bexteriors777@gmail.com</div></div></div></td>
+            <td>Princeton, MN</td>
+            <td>Blaine (13)</td>
+            <td>70 lbs · Competitive</td>
+            <td>320-247-0838</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">R</div><div><div class="user-name">rolson_2007</div><div class="user-email">rolson_2007@yahoo.com</div></div></div></td>
+            <td>Princeton, MN</td>
+            <td>Blaine Olson (13)</td>
+            <td>70 lbs · Competitive</td>
+            <td>320-247-0838</td>
+            <td><span class="badge badge-green">Active</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div id="bookings" class="view">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Recent Bookings <span style="color:#64748b;font-weight:400;font-size:14px;">(21 total)</span></div>
+        <div style="display:flex;gap:8px;">
+          <span class="badge badge-green">3 Confirmed</span>
+          <span class="badge badge-yellow">1 Completed</span>
+          <span class="badge badge-red">14 Cancelled</span>
+        </div>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Parent</th><th>Coach</th><th>Date</th><th>Time</th><th>Location</th><th>Price</th><th>Status</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>Rob Olson</td><td>macrkukowski</td><td>May 21</td><td>7:00 PM</td><td>Foley, MN</td><td class="revenue-highlight">$100</td><td><span class="booking-status status-cancelled">Cancelled</span></td></tr>
+          <tr><td>Rob Olson</td><td>Robert Olson</td><td>May 21</td><td>6:00 PM</td><td>Foley, MN</td><td>$0</td><td><span class="booking-status status-confirmed">Confirmed</span></td></tr>
+          <tr><td>Rob Olson</td><td>Robert Olson</td><td>May 22</td><td>2:00 PM</td><td>Foley, MN</td><td>$0</td><td><span class="booking-status status-confirmed">Confirmed</span></td></tr>
+          <tr><td>Rob Olson</td><td>Robert Olson</td><td>May 21</td><td>7:00 PM</td><td>Foley, MN</td><td>$0</td><td><span class="booking-status status-completed">Completed</span></td></tr>
+          <tr><td>Rob Olson</td><td>macrkukowski</td><td>May 20</td><td>7:00 PM</td><td>Foley, MN</td><td class="revenue-highlight">$100</td><td><span class="booking-status status-cancelled">Cancelled</span></td></tr>
+          <tr><td>Robert Olson</td><td>Robert Olson</td><td>May 18</td><td>6:00 AM</td><td>Princeton, MN</td><td>$0</td><td><span class="booking-status status-confirmed">Confirmed</span></td></tr>
+          <tr><td>Robert Olson</td><td>Jordan Davis</td><td>May 14</td><td>4:00 PM</td><td>Princeton, MN</td><td class="revenue-highlight">$125</td><td><span class="booking-status status-cancelled">Cancelled</span></td></tr>
+          <tr><td colspan="7" style="text-align:center;color:#475569;font-size:13px;padding:14px;">+ 14 more bookings (test/earlier sessions)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div id="reviews" class="view">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Reviews <span style="color:#64748b;font-weight:400;font-size:14px;">(2)</span></div>
+        <span class="badge badge-yellow">⭐ 5.0 avg</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th>Parent</th><th>Coach</th><th>Rating</th><th>Tags</th><th>Verified</th><th>Date</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">R</div><div><div class="user-name">Rob Olson</div></div></div></td>
+            <td>Robert Olson</td>
+            <td><span class="stars">★★★★★</span> 5.0</td>
+            <td><span class="specialty-tag">Excellent technique</span></td>
+            <td><span class="badge badge-green">✓ Verified</span></td>
+            <td>May 19, 2026</td>
+          </tr>
+          <tr>
+            <td><div class="user-cell"><div class="avatar">R</div><div><div class="user-name">rolson_2007</div></div></div></td>
+            <td>Test Coach</td>
+            <td><span class="stars">★★★★★</span> 5.0</td>
+            <td><span style="color:#475569;font-size:12px;">None</span></td>
+            <td><span class="badge badge-gray">Unverified</span></td>
+            <td>Feb 28, 2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(name).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
