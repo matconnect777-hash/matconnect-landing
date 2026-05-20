@@ -192,7 +192,7 @@
     <input type="text" id="betaLocation" placeholder="Your city or town (optional)"/>
     <button type="button" onclick="submitBeta(this)">Join the Beta &mdash; It's Free</button>
   </div>
-  <div class="success-msg" id="successMsg">&#127881; You're on the list! We'll reach out as soon as we launch in your area.</div>
+  <div class="success-msg" id="successMsg">&#127881; You're in! Taking you to your MatConnect account now...</div>
   <div class="beta-note" id="betaNote">No credit card required. Free during beta. Minnesota first.</div>
 </section>
 
@@ -213,7 +213,7 @@
     const role=document.getElementById('betaRole').value||'Not Sure';
     const loc=document.getElementById('betaLocation').value.trim();
     if(!email||!email.includes('@')){document.getElementById('betaEmail').style.border='2px solid #e74c3c';return;}
-    btn.textContent='Signing you up...';btn.disabled=true;
+    btn.textContent='Setting up your account...';btn.disabled=true;
     try{
       await fetch('https://app.base44.com/api/apps/6a0ca39847493f85c562bff2/functions/signupBeta',{
         method:'POST',
@@ -224,6 +224,11 @@
     document.getElementById('betaForm').style.display='none';
     document.getElementById('betaNote').style.display='none';
     document.getElementById('successMsg').style.display='block';
+    // Redirect to app after short delay so user sees success message
+    setTimeout(function(){
+      const appUrl = 'https://mat-connect-pro.base44.app/';
+      window.location.href = appUrl;
+    }, 2000);
   }
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{
