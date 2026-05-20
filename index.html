@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MatConnect — Find Elite Wrestling Coaches in Minnesota</title>
+  <meta name="description" content="MatConnect connects wrestlers and families with elite private wrestling coaches. Launching in Minnesota — join the beta today."/>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',Arial,sans-serif;color:#1a1a2e;background:#fff;}
+    nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,25,60,0.97);display:flex;justify-content:space-between;align-items:center;padding:16px 48px;}
+    .logo{font-size:24px;font-weight:800;color:#fff;letter-spacing:1px;}
+    .logo span{color:#f0b429;}
+    .nav-links a{color:#cdd5f0;text-decoration:none;margin-left:32px;font-size:15px;font-weight:500;transition:color 0.2s;}
+    .nav-links a:hover{color:#f0b429;}
+    .nav-cta{background:#f0b429!important;color:#0a193c!important;padding:10px 22px;border-radius:8px;font-weight:700!important;}
+    .hero{min-height:100vh;background:linear-gradient(135deg,#0a193c 0%,#162a5e 60%,#1e3a70 100%);display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:0;right:0;width:55%;height:100%;background:url('https://media.base44.com/images/public/6a0ca39847493f85c562bff2/021135886_generated_image.png') center/cover no-repeat;opacity:0.2;}
+    .hero-content{max-width:600px;position:relative;z-index:2;}
+    .hero-badge{display:inline-block;background:rgba(240,180,41,0.15);border:1px solid #f0b429;color:#f0b429;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;letter-spacing:1px;margin-bottom:24px;text-transform:uppercase;}
+    .hero h1{font-size:54px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:24px;}
+    .hero h1 span{color:#f0b429;}
+    .hero p{font-size:19px;color:#b0bcdd;line-height:1.7;margin-bottom:40px;max-width:520px;}
+    .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;}
+    .btn-primary{background:#f0b429;color:#0a193c;padding:16px 36px;border-radius:10px;font-size:17px;font-weight:800;text-decoration:none;display:inline-block;transition:all 0.2s;box-shadow:0 4px 20px rgba(240,180,41,0.4);}
+    .btn-primary:hover{background:#d4991f;transform:translateY(-2px);}
+    .btn-secondary{background:transparent;color:#fff;padding:16px 36px;border-radius:10px;font-size:17px;font-weight:700;text-decoration:none;display:inline-block;border:2px solid rgba(255,255,255,0.3);transition:all 0.2s;}
+    .btn-secondary:hover{border-color:#f0b429;color:#f0b429;}
+    .hero-stats{display:flex;gap:48px;margin-top:60px;}
+    .stat-num{font-size:34px;font-weight:900;color:#f0b429;}
+    .stat-label{font-size:13px;color:#8898bb;margin-top:4px;}
+    .section{padding:96px 48px;}
+    .section-inner{max-width:1100px;margin:0 auto;}
+    .section-label{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#f0b429;margin-bottom:12px;}
+    .section-title{font-size:38px;font-weight:900;color:#0a193c;line-height:1.2;margin-bottom:16px;}
+    .section-sub{font-size:17px;color:#5a6a8a;max-width:560px;line-height:1.7;}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;}
+    .step{text-align:center;padding:44px 28px;background:#f7f9fc;border-radius:16px;border:1px solid #e8edf5;transition:all 0.3s;}
+    .step:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(10,25,60,0.1);}
+    .step-num{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#0a193c,#1e3a70);color:#f0b429;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+    .step h3{font-size:19px;font-weight:800;color:#0a193c;margin-bottom:10px;}
+    .step p{font-size:15px;color:#5a6a8a;line-height:1.6;}
+    .for-who{background:#f7f9fc;}
+    .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:56px;}
+    .card{background:#fff;border-radius:20px;padding:44px 36px;border:1px solid #e8edf5;transition:all 0.3s;}
+    .card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(10,25,60,0.1);}
+    .card-icon{font-size:44px;margin-bottom:18px;}
+    .card h3{font-size:24px;font-weight:800;color:#0a193c;margin-bottom:10px;}
+    .card p{font-size:15px;color:#5a6a8a;line-height:1.7;margin-bottom:20px;}
+    .card ul{list-style:none;}
+    .card ul li{font-size:14px;color:#3a4a6a;padding:7px 0;border-bottom:1px solid #f0f2f8;display:flex;align-items:center;gap:10px;}
+    .card ul li:last-child{border-bottom:none;}
+    .card ul li::before{content:"✓";color:#f0b429;font-weight:900;}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;}
+    .feature{padding:32px 24px;border-radius:16px;background:#fff;border:1px solid #e8edf5;transition:all 0.3s;}
+    .feature:hover{border-color:#f0b429;box-shadow:0 8px 32px rgba(240,180,41,0.1);}
+    .feature-icon{font-size:32px;margin-bottom:14px;}
+    .feature h4{font-size:17px;font-weight:800;color:#0a193c;margin-bottom:7px;}
+    .feature p{font-size:13px;color:#5a6a8a;line-height:1.6;}
+    .beta-cta{background:linear-gradient(135deg,#0a193c 0%,#162a5e 100%);text-align:center;padding:96px 48px;}
+    .beta-cta h2{font-size:42px;font-weight:900;color:#fff;margin-bottom:14px;}
+    .beta-cta>p{font-size:18px;color:#8898bb;margin-bottom:48px;max-width:520px;margin-left:auto;margin-right:auto;}
+    .beta-form{display:flex;flex-direction:column;gap:14px;align-items:center;max-width:480px;margin:0 auto 20px;}
+    .beta-form input,.beta-form select{width:100%;padding:15px 18px;border-radius:10px;border:none;font-size:15px;background:rgba(255,255,255,0.1);color:#fff;outline:none;}
+    .beta-form input::placeholder{color:#8898bb;}
+    .beta-form select{color:#8898bb;cursor:pointer;}
+    .beta-form select option{background:#0a193c;color:#fff;}
+    .beta-form button{width:100%;background:#f0b429;color:#0a193c;padding:16px;border-radius:10px;border:none;font-size:16px;font-weight:800;cursor:pointer;transition:all 0.2s;}
+    .beta-form button:hover{background:#d4991f;}
+    .beta-note{font-size:13px;color:#5a6a8a;}
+    .success-msg{display:none;background:rgba(39,174,96,0.15);border:1px solid #27ae60;color:#27ae60;padding:20px 32px;border-radius:12px;font-size:16px;font-weight:600;max-width:480px;margin:0 auto;}
+    footer{background:#060e22;color:#5a6a8a;padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+    .footer-logo{font-size:20px;font-weight:800;color:#fff;}
+    .footer-logo span{color:#f0b429;}
+    .footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+    .footer-links a{color:#5a6a8a;text-decoration:none;font-size:14px;transition:color 0.2s;}
+    .footer-links a:hover{color:#f0b429;}
+    .footer-copy{font-size:12px;width:100%;text-align:center;margin-top:8px;border-top:1px solid #111a30;padding-top:20px;}
+    @media(max-width:768px){
+      nav{padding:14px 20px;}.nav-links{display:none;}
+      .hero{padding:90px 20px 60px;}.hero h1{font-size:34px;}.hero-stats{gap:20px;}
+      .section{padding:60px 20px;}
+      .steps,.cards,.features-grid{grid-template-columns:1fr;}
+      .beta-cta{padding:60px 20px;}
+      footer{padding:28px 20px;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="logo">Mat<span>Connect</span></div>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#who">Who It's For</a>
+    <a href="#features">Features</a>
+    <a href="#beta" class="nav-cta">Join Beta</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Beta Launch &mdash; Minnesota 2026</div>
+    <h1>Find the Right Coach.<br/><span>Elevate Your Game.</span></h1>
+    <p>MatConnect connects wrestlers and families with elite private wrestling coaches. Built for serious athletes who want more than just a practice.</p>
+    <div class="hero-buttons">
+      <a href="#beta" class="btn-primary">Get Early Access</a>
+      <a href="#how" class="btn-secondary">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">Free</div><div class="stat-label">To Get Started</div></div>
+      <div><div class="stat-num">MN</div><div class="stat-label">Launching First</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Vetted Coaches</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-inner">
+    <div class="section-label">Simple Process</div>
+    <div class="section-title">Get on the mat in 3 steps</div>
+    <div class="section-sub">No phone tag, no guesswork. Booking a private wrestling coach should be as easy as booking anything else.</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><h3>Browse Coaches</h3><p>Search by location, experience, specialty, and availability. Read verified reviews from real families.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Book a Session</h3><p>Pick a time, confirm the location, and lock it in &mdash; all within the app. No back-and-forth needed.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Hit the Mat</h3><p>Show up and train. Leave a review after so other families can find great coaches too.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section for-who" id="who">
+  <div class="section-inner">
+    <div class="section-label">Built For Everyone</div>
+    <div class="section-title">For families and coaches alike</div>
+    <div class="section-sub">Whether you're a parent finding the right coach or a coach ready to grow your clientele &mdash; MatConnect works for you.</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#128106;</div>
+        <h3>Parents &amp; Families</h3>
+        <p>Find coaches who specialize in your athlete's age group, weight class, and skill level.</p>
+        <ul>
+          <li>Browse verified coach profiles</li>
+          <li>Book sessions instantly</li>
+          <li>Manage everything in one place</li>
+          <li>Read reviews from real families</li>
+          <li>Message coaches directly in the app</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127885;</div>
+        <h3>Wrestling Coaches</h3>
+        <p>Stop relying on word of mouth. MatConnect brings motivated athletes to you so you can focus on coaching.</p>
+        <ul>
+          <li>Create your professional profile free</li>
+          <li>Set your own rates and availability</li>
+          <li>Get discovered by local families</li>
+          <li>Manage bookings in one dashboard</li>
+          <li>Build your reputation with verified reviews</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-label">Platform Features</div>
+    <div class="section-title">Everything you need, nothing you don't</div>
+    <div class="section-sub">MatConnect is built specifically for wrestling &mdash; not a generic coaching app with a wrestling filter.</div>
+    <div class="features-grid">
+      <div class="feature"><div class="feature-icon">&#128205;</div><h4>Location-Based Search</h4><p>Find coaches near you. Filter by distance, availability, and specialty.</p></div>
+      <div class="feature"><div class="feature-icon">&#128197;</div><h4>Easy Scheduling</h4><p>Real-time availability. Book instantly &mdash; no phone calls required.</p></div>
+      <div class="feature"><div class="feature-icon">&#128172;</div><h4>In-App Messaging</h4><p>Communicate directly with coaches about goals and session details.</p></div>
+      <div class="feature"><div class="feature-icon">&#11088;</div><h4>Verified Reviews</h4><p>Only clients who completed a session can leave a review. No fake ratings.</p></div>
+      <div class="feature"><div class="feature-icon">&#128737;</div><h4>Safe &amp; Secure</h4><p>Digital waivers, signed agreements, and a code of conduct protect everyone.</p></div>
+      <div class="feature"><div class="feature-icon">&#127942;</div><h4>Coach Profiles</h4><p>Certifications, experience, coaching style &mdash; everything to make the right choice.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="beta-cta" id="beta">
+  <h2>Be the First on the Mat</h2>
+  <p>MatConnect is launching in Minnesota first. Join the beta and get free early access before we open to the public.</p>
+  <div class="beta-form" id="betaForm">
+    <input type="email" id="betaEmail" placeholder="Your email address"/>
+    <select id="betaRole">
+      <option value="" disabled selected>I am a... (select one)</option>
+      <option value="Parent/Guardian">Parent / Guardian</option>
+      <option value="Coach">Wrestling Coach</option>
+      <option value="Both">Both</option>
+      <option value="Not Sure">Not Sure Yet</option>
+    </select>
+    <input type="text" id="betaLocation" placeholder="Your city or town (optional)"/>
+    <button type="button" onclick="submitBeta(this)">Join the Beta &mdash; It's Free</button>
+  </div>
+  <div class="success-msg" id="successMsg">&#127881; You're on the list! We'll reach out as soon as we launch in your area.</div>
+  <div class="beta-note" id="betaNote">No credit card required. Free during beta. Minnesota first.</div>
+</section>
+
+<footer>
+  <div class="footer-logo">Mat<span>Connect</span></div>
+  <div class="footer-links">
+    <a href="#">Terms of Service</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Code of Conduct</a>
+    <a href="mailto:matconnect777@gmail.com">matconnect777@gmail.com</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 MatConnect LLC &middot; Princeton, MN &middot; All rights reserved.</div>
+</footer>
+
+<script>
+  async function submitBeta(btn){
+    const email=document.getElementById('betaEmail').value.trim();
+    const role=document.getElementById('betaRole').value||'Not Sure';
+    const loc=document.getElementById('betaLocation').value.trim();
+    if(!email||!email.includes('@')){document.getElementById('betaEmail').style.border='2px solid #e74c3c';return;}
+    btn.textContent='Signing you up...';btn.disabled=true;
+    try{
+      await fetch('https://app.base44.com/api/apps/6a0ca39847493f85c562bff2/functions/signupBeta',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email,role,location:loc,signed_up_at:new Date().toISOString()})
+      });
+    }catch(e){}
+    document.getElementById('betaForm').style.display='none';
+    document.getElementById('betaNote').style.display='none';
+    document.getElementById('successMsg').style.display='block';
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t)t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
