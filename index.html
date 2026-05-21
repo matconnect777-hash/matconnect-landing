@@ -238,5 +238,112 @@
     });
   });
 </script>
+
+<!-- ── PWA: Add to Home Screen ── -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MatConnect">
+<meta name="theme-color" content="#0a193c">
+
+<!-- Install Banner -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#0a193c,#162a5e);border-top:3px solid #f0b429;padding:14px 20px;box-shadow:0 -4px 24px rgba(0,0,0,0.4);">
+  <div style="max-width:600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="width:44px;height:44px;background:#f0b429;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🤼</div>
+      <div>
+        <div style="color:#fff;font-weight:700;font-size:14px;font-family:sans-serif;">Install MatConnect</div>
+        <div style="color:#8898bb;font-size:12px;font-family:sans-serif;">Add to your home screen for quick access</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0;">
+      <button onclick="dismissBanner()" style="background:transparent;border:1px solid #3a4a6a;color:#8898bb;padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:sans-serif;">Not now</button>
+      <button onclick="installApp()" id="install-btn" style="background:#f0b429;border:none;color:#0a193c;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:sans-serif;">Install App</button>
+    </div>
+  </div>
+</div>
+
+<!-- iOS Install Instructions Modal -->
+<div id="ios-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);">
+  <div style="position:absolute;bottom:0;left:0;right:0;background:#0a193c;border-radius:20px 20px 0 0;border-top:3px solid #f0b429;padding:28px 24px 36px;">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:36px;margin-bottom:8px;">📱</div>
+      <div style="color:#f0b429;font-weight:800;font-size:18px;font-family:sans-serif;">Add MatConnect to Home Screen</div>
+      <div style="color:#8898bb;font-size:13px;font-family:sans-serif;margin-top:4px;">Follow these steps in Safari</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+      <div style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;">
+        <div style="width:32px;height:32px;background:#f0b429;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a193c;font-size:14px;flex-shrink:0;">1</div>
+        <div style="color:#fff;font-size:13px;font-family:sans-serif;">Tap the <strong style="color:#f0b429;">Share button</strong> <span style="font-size:16px;">⬆️</span> at the bottom of Safari</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;">
+        <div style="width:32px;height:32px;background:#f0b429;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a193c;font-size:14px;flex-shrink:0;">2</div>
+        <div style="color:#fff;font-size:13px;font-family:sans-serif;">Scroll down and tap <strong style="color:#f0b429;">"Add to Home Screen"</strong></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.06);border-radius:12px;padding:14px;">
+        <div style="width:32px;height:32px;background:#f0b429;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0a193c;font-size:14px;flex-shrink:0;">3</div>
+        <div style="color:#fff;font-size:13px;font-family:sans-serif;">Tap <strong style="color:#f0b429;">"Add"</strong> in the top-right corner — done! 🎉</div>
+      </div>
+    </div>
+    <button onclick="closeIosModal()" style="width:100%;background:#f0b429;border:none;color:#0a193c;padding:14px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;font-family:sans-serif;">Got it!</button>
+  </div>
+</div>
+
+<script>
+  let deferredPrompt = null;
+  const banner = document.getElementById('pwa-banner');
+
+  // Android/Chrome — capture install prompt
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    // Show banner after 3 seconds
+    setTimeout(() => { banner.style.display = 'block'; }, 3000);
+  });
+
+  // iOS detection
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+  if (isIos && !isInStandaloneMode) {
+    setTimeout(() => { banner.style.display = 'block'; }, 3000);
+  }
+
+  function installApp() {
+    if (deferredPrompt) {
+      // Android/Chrome native install
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choice) => {
+        deferredPrompt = null;
+        banner.style.display = 'none';
+      });
+    } else if (isIos) {
+      // iOS — show instructions modal
+      banner.style.display = 'none';
+      document.getElementById('ios-modal').style.display = 'block';
+    }
+  }
+
+  function dismissBanner() {
+    banner.style.display = 'none';
+    sessionStorage.setItem('pwa-dismissed', '1');
+  }
+
+  function closeIosModal() {
+    document.getElementById('ios-modal').style.display = 'none';
+  }
+
+  // Don't show if already dismissed this session
+  if (sessionStorage.getItem('pwa-dismissed')) {
+    banner.style.display = 'none';
+  }
+
+  // Already installed
+  if (isInStandaloneMode) {
+    banner.style.display = 'none';
+  }
+</script>
+
 </body>
 </html>
+
